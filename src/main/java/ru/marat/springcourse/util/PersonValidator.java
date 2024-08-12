@@ -16,7 +16,6 @@ public class PersonValidator implements Validator {
         this.personDAO = personDAO;
     }
 
-    // Нам нужно обратиться к базе данных, чтобы проверить, занят ли email, введённый пользователем
     @Override
     public boolean supports(Class<?> clazz) { // Тут даём понять к какому классу относится валидатор
         return Person.class.equals(clazz);
