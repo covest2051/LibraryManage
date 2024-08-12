@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Update person</title>
+</head>
+<body>
+
+<form th:method="PATCH" th:action="@{/people/{id}(id=${person.getId()})}" th:object="${person}"> <!-- Форма обращается на /people к объекту класса Person, т.е. объект под ключом person, который мы положили в модель -->
+    <label for="fio">Enter ФИО:</label>
+    <input type="text" th:field="*{fio}" id="fio"/>
+    <div style="color:red" th:if="${#fields.hasErrors('fio')}" th:errors="*{fio}">Name error</div>
+    <br/>
+    <label for="year_of_birth">Enter year of birth:</label>
+    <input type="text" th:field="*{year_of_birth}" id="year_of_birth"/>
+    <div style="color:red" th:if="${#fields.hasErrors('year_of_birth')}" th:errors="*{year_of_birth}">Age error</div>
+    <br/>
+    <input type="submit" value="Create!"/>
+</form>
+
+
+</body>
+</html>
