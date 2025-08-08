@@ -2,15 +2,66 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Все читатели</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Readers - Library Management System</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/static/css/main.css}">
 </head>
 <body>
-<div th:each="person : ${people}">
-    <a th:href="@{/people/{id}(id=${person.getId()})}" th:text="${person.getFio() + ', ' + person.getYear_of_birth()}">user</a>
-</div>
+    <!-- Header Section -->
+    <header class="header">
+        <div class="header-content">
+            <h1>Library Management System</h1>
+            <p class="subtitle">Professional Book and Reader Management</p>
+        </div>
+    </header>
 
-<br>
-<a href="/people/new">Добавить читателя</a>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="navbar-content">
+            <a href="/books" class="nav-link">📚 All Books</a>
+            <a href="/books/search" class="nav-link">🔍 Search Books</a>
+            <a href="/books/new" class="nav-link">➕ Add Book</a>
+            <a href="/people" class="nav-link active">👥 All Readers</a>
+            <a href="/people/new" class="nav-link">👤 Add Reader</a>
+        </div>
+    </nav>
 
+    <!-- Main Container -->
+    <div class="container">
+        <h2 class="page-title">All Readers</h2>
+
+        <!-- Readers List -->
+        <div class="card-grid">
+            <div th:each="person : ${people}" class="item-card fade-in">
+                <a th:href="@{/people/{id}(id=${person.getId()})}" 
+                   th:text="${person.getFio()}" 
+                   class="item-title">Reader Name</a>
+                
+                <div class="item-meta" th:text="'Born: ' + ${person.getYear_of_birth()}">Birth Year</div>
+                <div class="item-meta" th:text="'ID: ' + ${person.getId()}">Reader ID</div>
+                
+                <!-- Quick Actions -->
+                <div class="btn-group mt-md">
+                    <a th:href="@{/people/{id}(id=${person.getId()})}" class="btn btn-primary">View Details</a>
+                    <a th:href="@{/people/{id}/edit(id=${person.getId()})}" class="btn btn-outline">Edit</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Empty State -->
+        <div th:if="${people.isEmpty()}" class="no-results">
+            <h3>No Readers Found</h3>
+            <p>There are no readers registered in the system yet.</p>
+            <a href="/people/new" class="btn btn-primary mt-lg">Add First Reader</a>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="text-center mt-xl">
+            <a href="/people/new" class="btn btn-secondary">Add New Reader</a>
+            <a href="/books" class="btn btn-outline">View All Books</a>
+        </div>
+    </div>
+
+    <script type="text/javascript" th:src="@{/static/js/main.js}"></script>
 </body>
 </html>

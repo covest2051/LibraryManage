@@ -2,17 +2,66 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Все книги</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Books - Library Management System</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/static/css/main.css}">
 </head>
 <body>
-<div th:each="book : ${books}">
-    <a th:href="@{/books/{id}(id=${book.getBook_id()})}"
-       th:text="${book.getName() + ', ' + book.getAuthor() + ', ' + book.getYear()}">kniga</a>
-</div>
+    <!-- Header Section -->
+    <header class="header">
+        <div class="header-content">
+            <h1>Library Management System</h1>
+            <p class="subtitle">Professional Book and Reader Management</p>
+        </div>
+    </header>
 
-<br>
-<hr/>
-<a href="/books/new">Добавить новую книгу</a>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="navbar-content">
+            <a href="/books" class="nav-link active">📚 All Books</a>
+            <a href="/books/search" class="nav-link">🔍 Search Books</a>
+            <a href="/books/new" class="nav-link">➕ Add Book</a>
+            <a href="/people" class="nav-link">👥 All Readers</a>
+            <a href="/people/new" class="nav-link">👤 Add Reader</a>
+        </div>
+    </nav>
 
+    <!-- Main Container -->
+    <div class="container">
+        <h2 class="page-title">All Books</h2>
+
+        <!-- Books List -->
+        <div class="card-grid">
+            <div th:each="book : ${books}" class="item-card fade-in">
+                <a th:href="@{/books/{id}(id=${book.getBook_id()})}" 
+                   th:text="${book.getName()}" 
+                   class="item-title">Book Title</a>
+                
+                <div class="item-subtitle" th:text="'by ' + ${book.getAuthor()}">Author</div>
+                <div class="item-meta" th:text="'Published: ' + ${book.getYear()}">Year</div>
+                
+                <!-- Quick Actions -->
+                <div class="btn-group mt-md">
+                    <a th:href="@{/books/{id}(id=${book.getBook_id()})}" class="btn btn-primary">View Details</a>
+                    <a th:href="@{/books/{id}/edit(id=${book.getBook_id()})}" class="btn btn-outline">Edit</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Empty State -->
+        <div th:if="${books.isEmpty()}" class="no-results">
+            <h3>No Books Found</h3>
+            <p>There are no books in the library catalog yet.</p>
+            <a href="/books/new" class="btn btn-primary mt-lg">Add First Book</a>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="text-center mt-xl">
+            <a href="/books/new" class="btn btn-secondary">Add New Book</a>
+            <a href="/books/search" class="btn btn-outline">Search Books</a>
+        </div>
+    </div>
+
+    <script type="text/javascript" th:src="@{/static/js/main.js}"></script>
 </body>
 </html>
