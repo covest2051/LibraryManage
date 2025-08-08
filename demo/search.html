@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Books - Library Management System</title>
+    <link rel="stylesheet" type="text/css" href="../src/main/webapp/static/css/main.css">
+</head>
+<body>
+    <!-- Header Section -->
+    <header class="header">
+        <div class="header-content">
+            <h1>Library Management System</h1>
+            <p class="subtitle">Professional Book and Reader Management</p>
+        </div>
+    </header>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="navbar-content">
+            <a href="books.html" class="nav-link">📚 All Books</a>
+            <a href="search.html" class="nav-link active">🔍 Search Books</a>
+            <a href="book-form.html" class="nav-link">➕ Add Book</a>
+            <a href="people.html" class="nav-link">👥 All Readers</a>
+            <a href="reader-form.html" class="nav-link">👤 Add Reader</a>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="container">
+        <h2 class="page-title">Search Books</h2>
+
+        <!-- Search Form -->
+        <div class="search-container fade-in">
+            <form class="search-form">
+                <div class="search-input">
+                    <label for="query" class="form-label">🔍 Search for books by title, author, or year</label>
+                    <input type="text" 
+                           id="query" 
+                           name="query" 
+                           class="form-input"
+                           placeholder="Enter your search terms..."
+                           value="gatsby"
+                           autocomplete="off"/>
+                </div>
+                <input type="submit" value="Search Books" class="btn btn-primary" onclick="showResults(); return false;"/>
+            </form>
+            
+            <!-- Search Tips -->
+            <div class="mt-lg">
+                <h4 style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 0.5rem;">💡 Search Tips:</h4>
+                <ul style="font-size: 0.85rem; color: var(--text-light); margin-left: 1.5rem;">
+                    <li>Search by book title, author name, or publication year</li>
+                    <li>Use partial matches - e.g., "Harry" will find "Harry Potter"</li>
+                    <li>Search is case-insensitive</li>
+                    <li>Leave blank and click search to see all books</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Search Results -->
+        <div id="search-results" class="results-section" style="display: none;">
+            <div class="fade-in">
+                <h3 class="mb-lg">Found 1 book(s)</h3>
+                
+                <div class="card-grid">
+                    <div class="item-card">
+                        <a href="book-detail.html" class="item-title">The Great Gatsby</a>
+                        
+                        <div class="item-subtitle">by F. Scott Fitzgerald</div>
+                        <div class="item-meta">Published: 1925</div>
+                        
+                        <!-- Book Status -->
+                        <div class="status-message status-free mt-sm">
+                            ✅ Available for checkout
+                        </div>
+                        
+                        <!-- Action Buttons -->
+                        <div class="btn-group mt-md">
+                            <a href="book-detail.html" class="btn btn-primary">View Details</a>
+                            <a href="book-form.html" class="btn btn-outline">Edit</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- No Results Example -->
+        <div id="no-results" class="results-section" style="display: none;">
+            <div class="no-results">
+                <h3>📭 No Books Found</h3>
+                <p>No books match your search criteria. Try different terms or browse all books.</p>
+                <div class="btn-group mt-lg">
+                    <a href="books.html" class="btn btn-primary">View All Books</a>
+                    <a href="book-form.html" class="btn btn-secondary">Add New Book</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="text-center mt-xl">
+            <a href="books.html" class="btn btn-outline">Browse All Books</a>
+            <a href="book-form.html" class="btn btn-secondary">Add New Book</a>
+            <a href="index.html" class="btn btn-outline">Back to Home</a>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="../src/main/webapp/static/js/main.js"></script>
+    <script>
+        function showResults() {
+            const query = document.getElementById('query').value.toLowerCase();
+            const results = document.getElementById('search-results');
+            const noResults = document.getElementById('no-results');
+            
+            if (query.includes('gatsby') || query.includes('fitzgerald') || query.includes('1925')) {
+                results.style.display = 'block';
+                noResults.style.display = 'none';
+            } else if (query.trim() === '') {
+                alert('Please enter a search term');
+                return false;
+            } else {
+                results.style.display = 'none';
+                noResults.style.display = 'block';
+            }
+            
+            return false;
+        }
+    </script>
+</body>
+</html>
