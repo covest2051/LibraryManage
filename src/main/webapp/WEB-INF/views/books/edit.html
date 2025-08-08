@@ -1,27 +1,100 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Update book</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Book - Library Management System</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/static/css/main.css}">
 </head>
 <body>
+    <!-- Header Section -->
+    <header class="header">
+        <div class="header-content">
+            <h1>Library Management System</h1>
+            <p class="subtitle">Professional Book and Reader Management</p>
+        </div>
+    </header>
 
-<form th:method="PATCH" th:action="@{/books/{book_id}(book_id=${book.getBook_id()})}" th:object="${book}"> <!-- Форма обращается на /people к объекту класса Person, т.е. объект под ключом person, который мы положили в модель -->
-    <label for="name">Enter name of the book:</label>
-    <input type="text" th:field="*{name}" id="name"/>
-    <div style="color:red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name error</div>
-    <br/>
-    <label for="author">Enter author of the book:</label>
-    <input type="text" th:field="*{author}" id="author"/>
-    <div style="color:red" th:if="${#fields.hasErrors('author')}" th:errors="*{author}">Author error</div>
-    <br/>
-    <label for="year">Enter year of publication:</label>
-    <input type="text" th:field="*{year}" id="year"/>
-    <div style="color:red" th:if="${#fields.hasErrors('year')}" th:errors="*{year}">Year error</div>
-    <br/>
-    <input type="submit" value="Submit!"/>
-</form>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="navbar-content">
+            <a href="/books" class="nav-link">📚 All Books</a>
+            <a href="/books/search" class="nav-link">🔍 Search Books</a>
+            <a href="/books/new" class="nav-link">➕ Add Book</a>
+            <a href="/people" class="nav-link">👥 All Readers</a>
+            <a href="/people/new" class="nav-link">👤 Add Reader</a>
+        </div>
+    </nav>
 
+    <!-- Main Container -->
+    <div class="container">
+        <h2 class="page-title">Edit Book Details</h2>
 
+        <!-- Form Container -->
+        <div class="form-container fade-in">
+            <form th:method="PATCH" 
+                  th:action="@{/books/{book_id}(book_id=${book.getBook_id()})}" 
+                  th:object="${book}">
+                
+                <div class="form-group">
+                    <label for="name" class="form-label">📖 Book Title *</label>
+                    <input type="text" 
+                           th:field="*{name}" 
+                           id="name" 
+                           class="form-input"
+                           placeholder="Enter the book title"
+                           required/>
+                    <div th:if="${#fields.hasErrors('name')}" 
+                         th:errors="*{name}" 
+                         class="error-message">Title error</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="author" class="form-label">✍️ Author *</label>
+                    <input type="text" 
+                           th:field="*{author}" 
+                           id="author" 
+                           class="form-input"
+                           placeholder="Enter the author's name"
+                           required/>
+                    <div th:if="${#fields.hasErrors('author')}" 
+                         th:errors="*{author}" 
+                         class="error-message">Author error</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="year" class="form-label">📅 Year of Publication *</label>
+                    <input type="number" 
+                           th:field="*{year}" 
+                           id="year" 
+                           class="form-input"
+                           placeholder="Enter publication year"
+                           min="1000"
+                           max="2024"
+                           required/>
+                    <div th:if="${#fields.hasErrors('year')}" 
+                         th:errors="*{year}" 
+                         class="error-message">Year error</div>
+                </div>
+
+                <div class="btn-group text-center">
+                    <input type="submit" value="Update Book" class="btn btn-primary"/>
+                    <a th:href="@{/books/{book_id}(book_id=${book.getBook_id()})}" class="btn btn-secondary">View Book</a>
+                    <a href="/books" class="btn btn-outline">Cancel</a>
+                </div>
+            </form>
+        </div>
+
+        <!-- Current Book Info -->
+        <div class="card mt-xl">
+            <h4>📋 Current Book Information</h4>
+            <div class="item-meta">
+                <p><strong>Book ID:</strong> <span th:text="${book.getBook_id()}">ID</span></p>
+                <p><strong>Last Modified:</strong> Today</p>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript" th:src="@{/static/js/main.js}"></script>
 </body>
 </html>
