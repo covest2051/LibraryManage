@@ -1,5 +1,153 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library Management System</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/main.css">
+    <style>
+        .hero-section {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            z-index: 1;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .welcome-card {
+            max-width: 800px;
+            margin: 2rem auto;
+            text-align: center;
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+        
+        .feature-item {
+            background: var(--background-secondary);
+            padding: 2rem;
+            border-radius: var(--border-radius-lg);
+            box-shadow: var(--shadow-md);
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+        
+        .feature-item:hover {
+            transform: translateY(-5px);
+        }
+        
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
 <body>
-<h2>Hello World!</h2>
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-content">
+            <div style="max-width: 1200px; margin: 0 auto; padding: 0 1.5rem;">
+                <h1 style="font-size: 3.5rem; margin-bottom: 1rem; font-family: Georgia, serif;">📚</h1>
+                <h1 style="font-size: 2.5rem; margin-bottom: 1rem;">Library Management System</h1>
+                <p style="font-size: 1.2rem; margin-bottom: 2rem; opacity: 0.9;">Professional Book and Reader Management Solution</p>
+                <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                    <a href="/books" class="btn btn-secondary" style="background: white; color: var(--primary-color);">Browse Books</a>
+                    <a href="/people" class="btn btn-outline" style="border-color: white; color: white;">View Readers</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Welcome Card -->
+        <div class="welcome-card card">
+            <h2 style="color: var(--primary-color); margin-bottom: 1rem;">Welcome to Your Library</h2>
+            <p style="font-size: 1.1rem; color: var(--text-secondary); margin-bottom: 2rem;">
+                Manage your library's book collection and reader accounts with ease. 
+                Our professional system helps you track books, manage checkouts, and maintain organized records.
+            </p>
+        </div>
+
+        <!-- Features Grid -->
+        <div class="feature-grid">
+            <div class="feature-item">
+                <div class="feature-icon">📖</div>
+                <h3 style="color: var(--primary-color); margin-bottom: 0.5rem;">Book Management</h3>
+                <p style="color: var(--text-secondary);">Add, edit, and organize your book collection with detailed information and status tracking.</p>
+                <a href="/books" class="btn btn-primary" style="margin-top: 1rem;">Manage Books</a>
+            </div>
+
+            <div class="feature-item">
+                <div class="feature-icon">👥</div>
+                <h3 style="color: var(--primary-color); margin-bottom: 0.5rem;">Reader Management</h3>
+                <p style="color: var(--text-secondary);">Maintain reader accounts and track their borrowing history and current checkouts.</p>
+                <a href="/people" class="btn btn-primary" style="margin-top: 1rem;">Manage Readers</a>
+            </div>
+
+            <div class="feature-item">
+                <div class="feature-icon">🔍</div>
+                <h3 style="color: var(--primary-color); margin-bottom: 0.5rem;">Smart Search</h3>
+                <p style="color: var(--text-secondary);">Quickly find books by title, author, or year with our advanced search functionality.</p>
+                <a href="/books/search" class="btn btn-primary" style="margin-top: 1rem;">Search Books</a>
+            </div>
+
+            <div class="feature-item">
+                <div class="feature-icon">📋</div>
+                <h3 style="color: var(--primary-color); margin-bottom: 0.5rem;">Checkout System</h3>
+                <p style="color: var(--text-secondary);">Efficiently manage book checkouts and returns with real-time availability tracking.</p>
+                <a href="/books" class="btn btn-primary" style="margin-top: 1rem;">View Status</a>
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div style="text-align: center; margin: 3rem 0;">
+            <h3 style="color: var(--primary-color); margin-bottom: 1.5rem;">Quick Actions</h3>
+            <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                <a href="/books/new" class="btn btn-secondary">➕ Add New Book</a>
+                <a href="/people/new" class="btn btn-secondary">👤 Add New Reader</a>
+                <a href="/books/search" class="btn btn-outline">🔍 Search Library</a>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="/static/js/main.js"></script>
+    <script>
+        // Add welcome page specific animations
+        document.addEventListener('DOMContentLoaded', function() {
+            const features = document.querySelectorAll('.feature-item');
+            features.forEach((feature, index) => {
+                feature.style.opacity = '0';
+                feature.style.transform = 'translateY(30px)';
+                
+                setTimeout(() => {
+                    feature.style.transition = 'all 0.6s ease';
+                    feature.style.opacity = '1';
+                    feature.style.transform = 'translateY(0)';
+                }, (index + 1) * 200);
+            });
+        });
+    </script>
 </body>
 </html>
