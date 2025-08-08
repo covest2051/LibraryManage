@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Details - Library Management System</title>
+    <link rel="stylesheet" type="text/css" href="../src/main/webapp/static/css/main.css">
+</head>
+<body>
+    <!-- Header Section -->
+    <header class="header">
+        <div class="header-content">
+            <h1>Library Management System</h1>
+            <p class="subtitle">Professional Book and Reader Management</p>
+        </div>
+    </header>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="navbar-content">
+            <a href="books.html" class="nav-link">📚 All Books</a>
+            <a href="search.html" class="nav-link">🔍 Search Books</a>
+            <a href="book-form.html" class="nav-link">➕ Add Book</a>
+            <a href="people.html" class="nav-link">👥 All Readers</a>
+            <a href="reader-form.html" class="nav-link">👤 Add Reader</a>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="container">
+        <h2 class="page-title">Book Details</h2>
+
+        <!-- Book Information Card -->
+        <div class="card fade-in">
+            <h3 class="item-title">The Great Gatsby</h3>
+            
+            <div class="item-subtitle mb-md">
+                <strong>Author:</strong> <span>F. Scott Fitzgerald</span>
+            </div>
+            
+            <div class="item-meta mb-md">
+                <strong>Year Published:</strong> <span>1925</span>
+            </div>
+            
+            <div class="item-meta mb-lg">
+                <strong>Book ID:</strong> <span>12345</span>
+            </div>
+
+            <!-- Book Status Section - Available -->
+            <div class="status-message status-free">
+                <h4>✅ Current Status: Available</h4>
+                <p>This book is currently available for checkout.</p>
+                
+                <form class="mt-lg">
+                    <div class="form-group">
+                        <label for="person" class="form-label">Select Reader:</label>
+                        <select id="person" class="form-select">
+                            <option value="">Choose a reader...</option>
+                            <option value="1">John Smith</option>
+                            <option value="2">Emma Johnson</option>
+                            <option value="3">Michael Brown</option>
+                            <option value="4">Sarah Wilson</option>
+                        </select>
+                    </div>
+                    <input type="submit" value="Assign Book" class="btn btn-success"/>
+                </form>
+            </div>
+        </div>
+
+        <!-- Second Example - Checked Out Book -->
+        <div class="card fade-in mt-xl">
+            <h3 class="item-title">Example: Checked Out Book</h3>
+            
+            <div class="item-subtitle mb-md">
+                <strong>Title:</strong> <span>To Kill a Mockingbird</span>
+            </div>
+            
+            <div class="item-subtitle mb-md">
+                <strong>Author:</strong> <span>Harper Lee</span>
+            </div>
+
+            <!-- Book Status Section - Checked Out -->
+            <div class="status-message status-taken">
+                <h4>📋 Current Status: Checked Out</h4>
+                <p><strong>Reader:</strong> <span>John Smith</span></p>
+                
+                <form class="mt-lg">
+                    <input type="submit" value="Release Book" class="btn btn-success"/>
+                </form>
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="btn-group text-center">
+            <a href="book-form.html" class="btn btn-secondary">Edit Book Details</a>
+            <button type="button" class="btn btn-danger" onclick="alert('Delete confirmation would appear here')">Delete Book</button>
+            <a href="books.html" class="btn btn-outline">Back to All Books</a>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="../src/main/webapp/static/js/main.js"></script>
+</body>
+</html>

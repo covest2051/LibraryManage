@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add New Book - Library Management System</title>
+    <link rel="stylesheet" type="text/css" href="../src/main/webapp/static/css/main.css">
+</head>
+<body>
+    <!-- Header Section -->
+    <header class="header">
+        <div class="header-content">
+            <h1>Library Management System</h1>
+            <p class="subtitle">Professional Book and Reader Management</p>
+        </div>
+    </header>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="navbar-content">
+            <a href="books.html" class="nav-link">📚 All Books</a>
+            <a href="search.html" class="nav-link">🔍 Search Books</a>
+            <a href="book-form.html" class="nav-link active">➕ Add Book</a>
+            <a href="people.html" class="nav-link">👥 All Readers</a>
+            <a href="reader-form.html" class="nav-link">👤 Add Reader</a>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="container">
+        <h2 class="page-title">Add New Book</h2>
+
+        <!-- Form Container -->
+        <div class="form-container fade-in">
+            <form>
+                <div class="form-group">
+                    <label for="name" class="form-label">📖 Book Title *</label>
+                    <input type="text" 
+                           id="name" 
+                           class="form-input"
+                           placeholder="Enter the book title"
+                           value="The Hobbit"
+                           required/>
+                    <div class="error-message" style="display: none;">Title error</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="author" class="form-label">✍️ Author *</label>
+                    <input type="text" 
+                           id="author" 
+                           class="form-input"
+                           placeholder="Enter the author's name"
+                           value="J.R.R. Tolkien"
+                           required/>
+                    <div class="error-message" style="display: none;">Author error</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="year" class="form-label">📅 Year of Publication *</label>
+                    <input type="number" 
+                           id="year" 
+                           class="form-input"
+                           placeholder="Enter publication year"
+                           min="1000"
+                           max="2024"
+                           value="1937"
+                           required/>
+                    <div class="error-message" style="display: none;">Year error</div>
+                </div>
+
+                <div class="btn-group text-center">
+                    <input type="submit" value="Add Book" class="btn btn-primary" onclick="alert('Book would be added to the system!')"/>
+                    <a href="books.html" class="btn btn-outline">Cancel</a>
+                </div>
+            </form>
+        </div>
+
+        <!-- Help Information -->
+        <div class="card mt-xl">
+            <h4>📝 Adding Books - Guidelines</h4>
+            <ul style="padding-left: 1.5rem; color: var(--text-secondary);">
+                <li>All fields marked with * are required</li>
+                <li>Book titles should be complete and accurate</li>
+                <li>Author names can include multiple authors separated by commas</li>
+                <li>Publication year should be between 1000 and current year</li>
+                <li>Double-check information before submitting</li>
+            </ul>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="../src/main/webapp/static/js/main.js"></script>
+</body>
+</html>
