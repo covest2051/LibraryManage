@@ -1,39 +1,97 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Show Book</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Details - Library Management System</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/static/css/main.css}">
 </head>
 <body>
-<p th:text="${book.getName()}">VALUE</p>
-<p th:text="${book.getAuthor()}">VALUE</p>
-<p th:text="${book.getYear()}">VALUE</p>
-<p th:text="${book.getBook_id()}">VALUE</p>
+    <!-- Header Section -->
+    <header class="header">
+        <div class="header-content">
+            <h1>Library Management System</h1>
+            <p class="subtitle">Professional Book and Reader Management</p>
+        </div>
+    </header>
 
-<div th:if="${owner}">
-    <p>Эту книгу держит: <span th:text="${owner.getFio()}">FIO</span></p>
-    <form th:action="@{/books/{book_id}/release(book_id=${book.getBook_id()})}" method="post">
-        <input type="submit" value="Освободить книгу"/>
-    </form>
-</div>
-<div th:if="${people}">
-    <p>Эта книга свободна</p>
-    <form th:action="@{/books/{book_id}/assign(book_id=${book.getBook_id()})}" method="post">
-        <label for="person">Выберите человека</label>
-        <select th:object="${person}" th:field="*{id}" id="person">
-            <option th:each="person : ${people}" th:value="${person.getId()}" th:text="${person.getFio()}"></option>
-        </select>
-        <input type="submit" value="Назначить книгу пользователю"/>
-    </form>
-</div>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="navbar-content">
+            <a href="/books" class="nav-link">📚 All Books</a>
+            <a href="/books/search" class="nav-link">🔍 Search Books</a>
+            <a href="/books/new" class="nav-link">➕ Add Book</a>
+            <a href="/people" class="nav-link">👥 All Readers</a>
+            <a href="/people/new" class="nav-link">👤 Add Reader</a>
+        </div>
+    </nav>
 
+    <!-- Main Container -->
+    <div class="container">
+        <h2 class="page-title">Book Details</h2>
 
+        <!-- Book Information Card -->
+        <div class="card fade-in">
+            <h3 class="item-title" th:text="${book.getName()}">Book Title</h3>
+            
+            <div class="item-subtitle mb-md">
+                <strong>Author:</strong> <span th:text="${book.getAuthor()}">Author Name</span>
+            </div>
+            
+            <div class="item-meta mb-md">
+                <strong>Year Published:</strong> <span th:text="${book.getYear()}">Year</span>
+            </div>
+            
+            <div class="item-meta mb-lg">
+                <strong>Book ID:</strong> <span th:text="${book.getBook_id()}">ID</span>
+            </div>
 
-<a th:href="@{/books/{book_id}/edit(book_id=${book.getBook_id()})}">Редактировать данные книги</a>
+            <!-- Book Status Section -->
+            <div th:if="${owner}" class="status-message status-taken">
+                <h4>📋 Current Status: Checked Out</h4>
+                <p><strong>Reader:</strong> <span th:text="${owner.getFio()}">Reader Name</span></p>
+                
+                <form th:action="@{/books/{book_id}/release(book_id=${book.getBook_id()})}" 
+                      method="post" class="mt-lg">
+                    <input type="submit" value="Release Book" class="btn btn-success"/>
+                </form>
+            </div>
 
-<form th:method="DELETE" th:action="@{/books/{book_id}(book_id=${book.getBook_id()})}">
-    <input type="submit" value="Удалить книгу"/>
-</form>
+            <div th:if="${people}" class="status-message status-free">
+                <h4>✅ Current Status: Available</h4>
+                <p>This book is currently available for checkout.</p>
+                
+                <form th:action="@{/books/{book_id}/assign(book_id=${book.getBook_id()})}" 
+                      method="post" class="mt-lg">
+                    <div class="form-group">
+                        <label for="person" class="form-label">Select Reader:</label>
+                        <select th:object="${person}" th:field="*{id}" id="person" class="form-select">
+                            <option value="">Choose a reader...</option>
+                            <option th:each="person : ${people}" 
+                                    th:value="${person.getId()}" 
+                                    th:text="${person.getFio()}">Reader Name</option>
+                        </select>
+                    </div>
+                    <input type="submit" value="Assign Book" class="btn btn-success"/>
+                </form>
+            </div>
+        </div>
 
+        <!-- Action Buttons -->
+        <div class="btn-group text-center">
+            <a th:href="@{/books/{book_id}/edit(book_id=${book.getBook_id()})}" 
+               class="btn btn-secondary">Edit Book Details</a>
+            
+            <form th:method="DELETE" 
+                  th:action="@{/books/{book_id}(book_id=${book.getBook_id()})}" 
+                  style="display: inline-block;">
+                <input type="submit" value="Delete Book" class="btn btn-danger"/>
+            </form>
+            
+            <a href="/books" class="btn btn-outline">Back to All Books</a>
+        </div>
+    </div>
+
+    <script type="text/javascript" th:src="@{/static/js/main.js}"></script>
 </body>
 </html>

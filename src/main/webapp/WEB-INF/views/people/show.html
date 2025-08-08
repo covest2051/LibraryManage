@@ -1,38 +1,95 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Show</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reader Details - Library Management System</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/static/css/main.css}">
 </head>
 <body>
-<p th:text="${person.getFio()}">VALUE</p>
-<p th:text="${person.getYear_of_birth()}">VALUE</p>
-<p th:text="${person.getId()}">VALUE</p>
+    <!-- Header Section -->
+    <header class="header">
+        <div class="header-content">
+            <h1>Library Management System</h1>
+            <p class="subtitle">Professional Book and Reader Management</p>
+        </div>
+    </header>
 
-<div th:if="${!books.isEmpty()}">
-    <hr/>
-    <b>Книги:</b>
-    <br/>
-    <table th:each="book : ${books}">
-        <tr>
-            <td>
-                <span th:text="${book.getName() + ', ' + book.getAuthor() + ', ' + book.getYear()}"
-                th:style="${book.isExpired()} ? 'color: red' : 'color: black'">book</span>
-            </td>
-        </tr>
-    </table>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="navbar-content">
+            <a href="/books" class="nav-link">📚 All Books</a>
+            <a href="/books/search" class="nav-link">🔍 Search Books</a>
+            <a href="/books/new" class="nav-link">➕ Add Book</a>
+            <a href="/people" class="nav-link">👥 All Readers</a>
+            <a href="/people/new" class="nav-link">👤 Add Reader</a>
+        </div>
+    </nav>
 
+    <!-- Main Container -->
+    <div class="container">
+        <h2 class="page-title">Reader Details</h2>
 
-</div>
-<div th:if="${books.isEmpty()}">
-    <p>У читателя пока нет книг</p>
-</div>
+        <!-- Reader Information Card -->
+        <div class="card fade-in">
+            <h3 class="item-title" th:text="${person.getFio()}">Reader Name</h3>
+            
+            <div class="item-meta mb-md">
+                <strong>Birth Year:</strong> <span th:text="${person.getYear_of_birth()}">Birth Year</span>
+            </div>
+            
+            <div class="item-meta mb-lg">
+                <strong>Reader ID:</strong> <span th:text="${person.getId()}">ID</span>
+            </div>
 
-<a th:href="@{/people/{id}/edit(id=${person.getId()})}">Редактировать данные читателя</a>
+            <!-- Books Section -->
+            <div th:if="${!books.isEmpty()}" class="mt-xl">
+                <h4 class="mb-lg">📚 Currently Borrowed Books</h4>
+                
+                <div class="card-grid">
+                    <div th:each="book : ${books}" class="item-card">
+                        <div class="item-title" 
+                             th:text="${book.getName()}"
+                             th:style="${book.isExpired()} ? 'color: var(--error-color)' : 'color: var(--primary-color)'">
+                            Book Title
+                        </div>
+                        
+                        <div class="item-subtitle" th:text="'by ' + ${book.getAuthor()}">Author</div>
+                        <div class="item-meta" th:text="'Published: ' + ${book.getYear()}">Year</div>
+                        
+                        <div th:if="${book.isExpired()}" class="status-message status-overdue mt-sm">
+                            ⚠️ This book is overdue!
+                        </div>
+                        
+                        <div class="btn-group mt-md">
+                            <a th:href="@{/books/{id}(id=${book.getBook_id()})}" class="btn btn-primary">View Book</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-<form th:method="DELETE" th:action="@{/people/{id}(id=${person.getId()})}">
-    <input type="submit" value="Удалить читателя"/>
-</form>
+            <div th:if="${books.isEmpty()}" class="status-message status-free">
+                <h4>📖 No Books Currently Borrowed</h4>
+                <p>This reader has not borrowed any books yet.</p>
+            </div>
+        </div>
 
+        <!-- Action Buttons -->
+        <div class="btn-group text-center">
+            <a th:href="@{/people/{id}/edit(id=${person.getId()})}" 
+               class="btn btn-secondary">Edit Reader Details</a>
+            
+            <form th:method="DELETE" 
+                  th:action="@{/people/{id}(id=${person.getId()})}" 
+                  style="display: inline-block;">
+                <input type="submit" value="Delete Reader" class="btn btn-danger"/>
+            </form>
+            
+            <a href="/people" class="btn btn-outline">Back to All Readers</a>
+            <a href="/books" class="btn btn-outline">Browse Books</a>
+        </div>
+    </div>
+
+    <script type="text/javascript" th:src="@{/static/js/main.js}"></script>
 </body>
 </html>
