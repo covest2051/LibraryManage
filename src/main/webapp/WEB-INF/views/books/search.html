@@ -1,35 +1,112 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Books - Library Management System</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/static/css/main.css}">
 </head>
 <body>
+    <!-- Header Section -->
+    <header class="header">
+        <div class="header-content">
+            <h1>Library Management System</h1>
+            <p class="subtitle">Professional Book and Reader Management</p>
+        </div>
+    </header>
 
-<form th:method="post" th:action="@{/books/search}">
-    <label for="query">Введите поисковой запрос: </label>
-    <input type="text" id="query" name="query"/>
-    <br/>
-    <input type="submit" value="Искать!"/>
-</form>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="navbar-content">
+            <a href="/books" class="nav-link">📚 All Books</a>
+            <a href="/books/search" class="nav-link active">🔍 Search Books</a>
+            <a href="/books/new" class="nav-link">➕ Add Book</a>
+            <a href="/people" class="nav-link">👥 All Readers</a>
+            <a href="/people/new" class="nav-link">👤 Add Reader</a>
+        </div>
+    </nav>
 
-<div th:if="${books}">
-    <div th:if="${books.isEmpty()}">
-        <span>Книг не найдено</span>
-    </div>
+    <!-- Main Container -->
+    <div class="container">
+        <h2 class="page-title">Search Books</h2>
 
-    <div th:each="book : ${books}">
-        <p th:text="${book.getName() + ', ' + book.getAuthor() + ', ' + book.getYear()}">book</p>
-
-        <div th:if="${book.getPerson() != null}">
-            <span>Книга сейчас y: </span> <span th:text="${book.getPerson().getFio()}">Person Name</span>
+        <!-- Search Form -->
+        <div class="search-container fade-in">
+            <form th:method="post" th:action="@{/books/search}" class="search-form">
+                <div class="search-input">
+                    <label for="query" class="form-label">🔍 Search for books by title, author, or year</label>
+                    <input type="text" 
+                           id="query" 
+                           name="query" 
+                           class="form-input"
+                           placeholder="Enter your search terms..."
+                           th:value="${param.query != null ? param.query[0] : ''}"
+                           autocomplete="off"/>
+                </div>
+                <input type="submit" value="Search Books" class="btn btn-primary"/>
+            </form>
+            
+            <!-- Search Tips -->
+            <div class="mt-lg">
+                <h4 style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 0.5rem;">💡 Search Tips:</h4>
+                <ul style="font-size: 0.85rem; color: var(--text-light); margin-left: 1.5rem;">
+                    <li>Search by book title, author name, or publication year</li>
+                    <li>Use partial matches - e.g., "Harry" will find "Harry Potter"</li>
+                    <li>Search is case-insensitive</li>
+                    <li>Leave blank and click search to see all books</li>
+                </ul>
+            </div>
         </div>
 
-        <div th:if="${book.getPerson() == null}">
-            <span>Книга свободна</span>
+        <!-- Search Results -->
+        <div th:if="${books}" class="results-section">
+            <div th:if="${books.isEmpty()}" class="no-results">
+                <h3>📭 No Books Found</h3>
+                <p>No books match your search criteria. Try different terms or browse all books.</p>
+                <div class="btn-group mt-lg">
+                    <a href="/books" class="btn btn-primary">View All Books</a>
+                    <a href="/books/new" class="btn btn-secondary">Add New Book</a>
+                </div>
+            </div>
+
+            <div th:if="${!books.isEmpty()}" class="fade-in">
+                <h3 class="mb-lg" th:text="'Found ' + ${books.size()} + ' book(s)'">Search Results</h3>
+                
+                <div class="card-grid">
+                    <div th:each="book : ${books}" class="item-card">
+                        <a th:href="@{/books/{id}(id=${book.getBook_id()})}" 
+                           th:text="${book.getName()}" 
+                           class="item-title">Book Title</a>
+                        
+                        <div class="item-subtitle" th:text="'by ' + ${book.getAuthor()}">Author</div>
+                        <div class="item-meta" th:text="'Published: ' + ${book.getYear()}">Year</div>
+                        
+                        <!-- Book Status -->
+                        <div th:if="${book.getPerson() != null}" class="status-message status-taken mt-sm">
+                            📋 Currently with: <span th:text="${book.getPerson().getFio()}">Reader Name</span>
+                        </div>
+                        
+                        <div th:if="${book.getPerson() == null}" class="status-message status-free mt-sm">
+                            ✅ Available for checkout
+                        </div>
+                        
+                        <!-- Action Buttons -->
+                        <div class="btn-group mt-md">
+                            <a th:href="@{/books/{id}(id=${book.getBook_id()})}" class="btn btn-primary">View Details</a>
+                            <a th:href="@{/books/{id}/edit(id=${book.getBook_id()})}" class="btn btn-outline">Edit</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <hr/>
+
+        <!-- Quick Actions -->
+        <div class="text-center mt-xl">
+            <a href="/books" class="btn btn-outline">Browse All Books</a>
+            <a href="/books/new" class="btn btn-secondary">Add New Book</a>
+        </div>
     </div>
-</div>
+
+    <script type="text/javascript" th:src="@{/static/js/main.js}"></script>
 </body>
 </html>

@@ -1,20 +1,86 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Show</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add New Reader - Library Management System</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/static/css/main.css}">
 </head>
 <body>
-<form th:method="POST" th:action="@{/people}" th:object="${person}">
-    <label for="fio">Enter ФИО:</label>
-    <input type="text" th:field="*{fio}" id="fio"/>
-    <div style="color:red" th:if="${#fields.hasErrors('fio')}" th:errors="*{name}">fio error</div>
-    <br/>
-    <label for="year_of_birth">Enter year of birth:</label>
-    <input type="text" th:field="*{year_of_birth}" id="year_of_birth"/>
-    <div style="color:red" th:if="${#fields.hasErrors('year_of_birth')}" th:errors="*{year_of_birth}">year_of_birth error</div>
-    <input type="submit" value="Create!"/>
-</form>
+    <!-- Header Section -->
+    <header class="header">
+        <div class="header-content">
+            <h1>Library Management System</h1>
+            <p class="subtitle">Professional Book and Reader Management</p>
+        </div>
+    </header>
 
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="navbar-content">
+            <a href="/books" class="nav-link">📚 All Books</a>
+            <a href="/books/search" class="nav-link">🔍 Search Books</a>
+            <a href="/books/new" class="nav-link">➕ Add Book</a>
+            <a href="/people" class="nav-link">👥 All Readers</a>
+            <a href="/people/new" class="nav-link active">👤 Add Reader</a>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="container">
+        <h2 class="page-title">Add New Reader</h2>
+
+        <!-- Form Container -->
+        <div class="form-container fade-in">
+            <form th:method="POST" th:action="@{/people}" th:object="${person}">
+                <div class="form-group">
+                    <label for="fio" class="form-label">👤 Full Name *</label>
+                    <input type="text" 
+                           th:field="*{fio}" 
+                           id="fio" 
+                           class="form-input"
+                           placeholder="Enter reader's full name"
+                           required/>
+                    <div th:if="${#fields.hasErrors('fio')}" 
+                         th:errors="*{fio}" 
+                         class="error-message">Name error</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="year_of_birth" class="form-label">📅 Year of Birth *</label>
+                    <input type="number" 
+                           th:field="*{year_of_birth}" 
+                           id="year_of_birth" 
+                           class="form-input"
+                           placeholder="Enter birth year"
+                           min="1900"
+                           max="2024"
+                           required/>
+                    <div th:if="${#fields.hasErrors('year_of_birth')}" 
+                         th:errors="*{year_of_birth}" 
+                         class="error-message">Birth year error</div>
+                </div>
+
+                <div class="btn-group text-center">
+                    <input type="submit" value="Add Reader" class="btn btn-primary"/>
+                    <a href="/people" class="btn btn-outline">Cancel</a>
+                </div>
+            </form>
+        </div>
+
+        <!-- Help Information -->
+        <div class="card mt-xl">
+            <h4>📝 Adding Readers - Guidelines</h4>
+            <ul style="padding-left: 1.5rem; color: var(--text-secondary);">
+                <li>All fields marked with * are required</li>
+                <li>Full name should include first and last name</li>
+                <li>Birth year should be between 1900 and current year</li>
+                <li>Each reader will receive a unique ID automatically</li>
+                <li>Readers can borrow multiple books once registered</li>
+            </ul>
+        </div>
+    </div>
+
+    <script type="text/javascript" th:src="@{/static/js/main.js}"></script>
 </body>
 </html>
